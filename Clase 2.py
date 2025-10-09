@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 #Cargar datset partidos
-df_partidos = pd.read_csv("partidos-cebollitas.csv")
+df_partidos = pd.read_csv("partidos-cebollitas-limpio.csv")
 
 #Mostrar primeras filas
 print(df_partidos.head(6))
