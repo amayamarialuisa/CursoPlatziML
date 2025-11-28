@@ -36,3 +36,9 @@ plt.show()
 sns.scatterplot(x='posesion_local (%)', y='goles_local', data=df_partidos)
 plt.title('Relacion posesion vs goles marcados (equipo local)')
 plt.show()
+
+#Mapa de calor para correlación entre variables clave
+plt.figure(figsize=(10, 6))
+sns.heatmap(df_partidos[['goles_local','goles_visitante','posesion_local (%)','posesion_visitante (%)','tiros_arco_local','tiros_arco_visitante']].corr(),annot=True, cmap='coolwarm')
+plt.title('Mapa de calor - correlación entre variables')
+plt.show()

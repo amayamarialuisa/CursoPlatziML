@@ -33,3 +33,43 @@ print(datos_preparados.info())
 
 print("Shape final del dataset preparado:", datos_preparados.shape)
 
+pd.set_option('display.width', None)
+pd.set_option('display.max_columns', None)
+
+print(datos_cebollitas)
+
+datos_cebollitas['diferencia_goles'] = 0
+
+datos_cebollitas['diferencia_goles'] = datos_cebollitas['goles_local'] - datos_cebollitas['goles_visitante']
+
+print(datos_cebollitas)
+
+# Crear columnas de puntos
+datos_cebollitas['puntos_local'] = 0
+datos_cebollitas['puntos_visitante'] = 0
+
+# Empate
+datos_cebollitas.loc[datos_cebollitas['diferencia_goles'] == 0, 'puntos_local'] = 1
+datos_cebollitas.loc[datos_cebollitas['diferencia_goles'] == 0, 'puntos_visitante'] = 1
+
+# Gana local
+datos_cebollitas.loc[datos_cebollitas['diferencia_goles'] > 0, 'puntos_local'] = 3
+
+# Gana visitante
+datos_cebollitas.loc[datos_cebollitas['diferencia_goles'] < 0, 'puntos_visitante'] = 3
+
+df_local = datos_cebollitas[['equipo_local', 'puntos_local']].copy()
+df_local = df_local.rename(columns={'equipo_local': 'nombre_equipo',
+                                    'puntos_local': 'puntos'})
+
+df_visit = datos_cebollitas[['equipo_visitante', 'puntos_visitante']].copy()
+df_visit = df_visit.rename(columns={'equipo_visitante': 'nombre_equipo',
+                                    'puntos_visitante': 'puntos'})
+
+df_puntos = pd.concat([df_local, df_visit], ignore_index=True)
+
+df_campeon = df_puntos.groupby('nombre_equipo', as_index=False)['puntos'].sum()
+
+print(df_campeon)
+
+
