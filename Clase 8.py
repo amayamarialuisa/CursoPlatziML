@@ -30,3 +30,25 @@ print(df_cebollitas[['fecha_partido', 'equipo_local', 'equipo_visitante',
                      'goles_local', 'goles_visitante', 'diferencia_goles']])
 
 print(df_cebollitas.columns)
+
+#Histograma diferencia de goles
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Definir rango y bins de tamaño 1
+min_gol = df_cebollitas['diferencia_goles'].min()
+max_gol = df_cebollitas['diferencia_goles'].max()
+
+bins = np.arange(min_gol - 0.5, max_gol + 1.5, 1)
+
+plt.figure()
+plt.hist(df_cebollitas['diferencia_goles'], bins=bins)
+plt.xlabel('Diferencia de goles')
+plt.ylabel('Cantidad de partidos')
+plt.title('Histograma de la diferencia de goles de Cebollitas FC')
+
+# Eje X con escala de 1 en 1
+plt.xticks(range(min_gol, max_gol + 1))
+
+plt.show()
